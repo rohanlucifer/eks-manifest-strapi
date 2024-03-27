@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-strapi
+spec:
+  replicas: {{ .Values.strapi.replicas }}
+  selector:
+    matchLabels:
+      app: strapi
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: strapi
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: {{ .Values.strapi.configMapName }}
+        image: {{ .Values.strapi.image.repository }}:{{ .Values.strapi.image.tag }}
+        imagePullPolicy: {{ .Values.strapi.image.pullPolicy }}
+        name: strapi
+        ports:
+        - containerPort: {{ .Values.strapi.port }}
+          name: strapi
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: {{ .Values.strapi.volumeMountPath }}
+          name: strapi
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: strapi
+        persistentVolumeClaim:
+          claimName: {{ .Values.strapi.volumeClaimName }}
+

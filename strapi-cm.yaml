@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  DATABASE_CLIENT: mongo
+  DATABASE_HOST: mongodb-strapi
+  DATABASE_NAME: home-strapi-app
+  DATABASE_PASSWORD: fPgADmiNRR
+  DATABASE_PORT: "27017"
+  DATABASE_USERNAME: admin
+kind: ConfigMap
+metadata:
+  name: strapi-configmap
+  namespace: default

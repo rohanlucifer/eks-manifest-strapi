@@ -1,0 +1,42 @@
+# Default values for strapi.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+mongodbStrapi:
+  replicas: 1
+  image:
+    repository: "mongo"
+    tag: "sha256:59448b028874b9ce3150cc692a3f85e8beed92cb8dc9479bdc3fd453b70e1fb1"
+    pullPolicy: "Always"
+  volumeClaimName: "mongo-strapi-data"
+  secretName: "mongo-creds"
+  usernameKey: "username"
+  passwordKey: "password"
+  volumeMountPath: "/data/db"
+
+mongodbStrapiService:
+  enabled: true  
+  port: 27017
+  nodePort: 31185
+  targetPort: 27017
+  type: NodePort
+
+strapi:
+  replicas: 1
+  image:
+    repository: "strapi/strapi"
+    tag: "latest" # Update with the appropriate tag
+    pullPolicy: "Always"
+  port: 1337
+  configMapName: "strapi-configmap"
+  volumeClaimName: "strapi-pvc"
+  volumeMountPath: "/srv/app"
+
+strapiService:
+  enabled: true
+  name: strapi
+  port: 1337
+  type: ClusterIP
+  targetPort: 1337
+
+

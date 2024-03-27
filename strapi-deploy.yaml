@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: strapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: strapi
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: strapi
+    spec:
+      containers:
+      - envFrom:
+        - configMapRef:
+            name: strapi-configmap
+        image: strapi/strapi
+        imagePullPolicy: Always
+        name: strapi
+        ports:
+        - containerPort: 1337
+          name: strapi
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /srv/app
+          name: strapi
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: strapi
+        persistentVolumeClaim:
+          claimName: strapi-pvc

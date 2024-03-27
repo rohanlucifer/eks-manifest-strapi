@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.mongodbStrapiService.name }}
+spec:
+  ports:
+  - nodePort: {{ .Values.mongodbStrapiService.nodePort }}
+    port: {{ .Values.mongodbStrapiService.port }}
+    protocol: TCP
+    targetPort: {{ .Values.mongodbStrapiService.targetPort }}
+  selector:
+    app: mongo
+  type: NodePort
+

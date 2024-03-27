@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.strapiService.name }}
+spec:
+  ports:
+  - port: {{ .Values.strapiService.port }}
+    protocol: TCP
+    targetPort: {{ .Values.strapiService.targetPort }}
+  selector:
+    app: strapi
+  type: ClusterIP
+
