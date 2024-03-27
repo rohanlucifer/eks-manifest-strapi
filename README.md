@@ -1,0 +1,1 @@
+# eks-manifest-strapi
