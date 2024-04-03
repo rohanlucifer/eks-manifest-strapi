@@ -29,7 +29,13 @@ spec:
         - containerPort: {{ .Values.strapi.port }}
           name: strapi
           protocol: TCP
-        resources: {}
+        resources:
+          limits:
+            cpu: {{ .Values.strapi.resources.limits.cpu }}
+            memory: {{ .Values.strapi.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.strapi.resources.requests.cpu }}
+            memory: {{ .Values.strapi.resources.requests.memory }}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:

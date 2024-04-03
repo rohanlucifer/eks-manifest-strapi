@@ -13,8 +13,16 @@ mongodbStrapi:
   usernameKey: "username"
   passwordKey: "password"
   volumeMountPath: "/data/db"
+  resources:
+    limits:
+      cpu: 250m
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 1Gi
 
 mongodbStrapiService:
+  name: "mongodb-strapi"
   enabled: true  
   port: 27017
   nodePort: 31185
@@ -31,10 +39,17 @@ strapi:
   configMapName: "strapi-configmap"
   volumeClaimName: "strapi-pvc"
   volumeMountPath: "/srv/app"
+  resources:
+    limits:
+      cpu: 250m
+      memory: 1Gi
+    requests:
+      cpu: 250m
+      memory: 1Gi
 
 strapiService:
   enabled: true
-  name: strapi
+  name: "strapi"
   port: 1337
   type: ClusterIP
   targetPort: 1337
