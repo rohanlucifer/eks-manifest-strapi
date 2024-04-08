@@ -1,0 +1,17 @@
+kind: PersistentVolume
+metadata:
+  name: strapi-pv
+spec:
+  accessModes:
+  - ReadWriteOnce
+  awsElasticBlockStore:
+    fsType: ext4
+    volumeID: vol-0c662dc5c09f06b2c
+  capacity:
+    storage: 50Gi
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: strapi-pvc
+    namespace: default
+  persistentVolumeReclaimPolicy: Retain
